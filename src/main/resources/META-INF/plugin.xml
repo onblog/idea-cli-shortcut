@@ -1,0 +1,70 @@
+<idea-plugin>
+    <id>com.github.onblog.idea-cli-shortcut</id>
+    <name>CLI Shortcut</name>
+    <vendor email="support@example.com">Example</vendor>
+    <description><![CDATA[
+        <h3>English</h3>
+        <p>
+            CLI Shortcut is a lightweight IntelliJ IDEA plugin for running frequently used command-line scripts directly from the IDE toolbar.
+            It is designed for developers who repeatedly open Terminal and type the same project commands, such as starting local services,
+            running build scripts, executing deployment helpers, refreshing generated files, or launching other CLI workflows.
+        </p>
+        <p>
+            After installation, the plugin adds a fixed toolbar button to the top-right area of the IDE. Clicking the button opens or focuses
+            the built-in IDEA Terminal, sends a greeting command first, and then runs the enabled scripts configured by the user.
+            Scripts are executed in the order shown in the settings page, with disabled or blank scripts skipped.
+        </p>
+        <p>
+            Configuration is available under <b>Settings | Tools | CLI Shortcut</b>. The settings page supports multiple scripts and lets you
+            enable or disable each script, edit its display name, edit the command content, add or remove scripts, and move scripts up or down
+            to control execution order. The default configuration includes an explanatory echo script so users can immediately see how the
+            plugin works after installation.
+        </p>
+        <p>
+            This plugin intentionally keeps the workflow simple: it acts as a CLI shortcut launcher inside the IDE. It does not parse command
+            output, manage background jobs, or replace Terminal. The terminal remains visible so users can inspect output, errors, prompts,
+            and shell behavior exactly as they would during normal command-line work.
+        </p>
+
+        <h3>中文</h3>
+        <p>
+            CLI Shortcut 是一个轻量级 IntelliJ IDEA 插件，用来从 IDE 工具栏快速执行常用命令行脚本。
+            它适合经常需要打开 Terminal 并重复输入相同项目命令的开发场景，例如启动本地服务、运行构建脚本、
+            执行部署辅助命令、刷新生成文件，或触发其他 CLI 工作流。
+        </p>
+        <p>
+            插件安装后，会在 IDEA 右上角工具栏添加一个固定按钮。点击按钮后，插件会打开或聚焦 IDEA 内置 Terminal，
+            先发送一条问候命令，然后继续按用户配置执行已启用脚本。脚本会按照设置页中的顺序执行，未启用或内容为空的脚本会被跳过。
+        </p>
+        <p>
+            配置入口位于 <b>Settings | Tools | CLI Shortcut</b>。设置页支持配置多个脚本，可以启用或停用单个脚本、
+            编辑脚本显示名称、编辑命令内容、新增或删除脚本，并通过上移、下移调整执行顺序。默认配置包含一个说明用 echo 脚本，
+            用户安装后可以立刻看到插件的执行效果。
+        </p>
+        <p>
+            这个插件刻意保持简单：它只是 IDE 内的 CLI 快捷启动器，不解析命令输出，不管理后台任务，也不替代 Terminal。
+            终端会保持可见，用户可以像平常使用命令行一样查看输出、错误、提示符和 shell 行为。
+        </p>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.plugins.terminal</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable
+                instance="com.example.clishortcut.CliShortcutConfigurable"
+                displayName="CLI Shortcut"
+                parentId="tools"/>
+        <notificationGroup id="CLI Shortcut" displayType="BALLOON"/>
+    </extensions>
+
+    <actions>
+        <action id="com.example.clishortcut.RunScriptsAction"
+                class="com.example.clishortcut.RunScriptsAction"
+                text="Run CLI Shortcut"
+                description="Run configured CLI scripts"
+                icon="/icons/cliShortcut.svg">
+            <add-to-group group-id="MainToolbarRight" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>

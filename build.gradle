@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij.platform' version '2.17.0'
+}
+
+group = pluginGroup
+version = pluginVersion
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
+}
+
+dependencies {
+    intellijPlatform {
+        intellijIdeaCommunity(platformVersion)
+        bundledPlugin('org.jetbrains.plugins.terminal')
+    }
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.3'
+    testRuntimeOnly 'junit:junit:4.13.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+intellijPlatform {
+    pluginConfiguration {
+        name = pluginName
+        version = pluginVersion
+        ideaVersion {
+            sinceBuild = pluginSinceBuild
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+
+test {
+    useJUnitPlatform()
+}
